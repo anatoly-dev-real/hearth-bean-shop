@@ -1,0 +1,2 @@
+@{ ViewData["Title"] = T["PlaceOrder"]; }
+<section class="completion-page"><span class="completion-mark" aria-hidden="true">✓</span><p class="eyebrow">HEARTH & BEAN</p><h1>@T["OrderPlaced"]</h1>@if (TempData["OrderId"] is int orderId){<p>@T["OrderNumber"] #@orderId</p>}<p class="demo-payment-note">@T["NoPayment"]</p><a class="button button-dark" asp-controller="Orders" asp-action="Index">@T["OrderHistory"]</a></section>

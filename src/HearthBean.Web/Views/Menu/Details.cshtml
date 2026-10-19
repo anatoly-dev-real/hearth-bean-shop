@@ -1,0 +1,22 @@
+@model ProductCardViewModel
+@{
+    ViewData["Title"] = Model.Name;
+}
+<div class="breadcrumbs"><a asp-action="Index">@T["NavMenu"]</a><span>/</span><span>@Model.CategoryName</span></div>
+<section class="product-detail">
+    <div class="detail-image"><img src="~/images/@Photos.FileFor(Model.Product.Slug, Model.Product.ImageFileName)" alt="@Model.Name" /></div>
+    <div class="detail-copy"><p class="eyebrow">@Model.CategoryName</p><h1>@Model.Name</h1><p class="detail-description">@Model.Description</p>
+        <p class="detail-price">@Model.Product.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))</p>
+        <p class="stock-note">@Model.Product.StockQuantity @T["StockLabel"]</p>
+        @if (Model.Product.IsVegan){<span class="product-tag inline-tag">@T["Vegan"]</span>}
+        @if (Model.Product.StockQuantity > 0)
+        {
+            <form asp-controller="Cart" asp-action="Add" asp-route-productId="@Model.Product.Id" method="post" class="detail-add-form">
+                <label for="quantity">@T["Quantity"]</label><input id="quantity" name="quantity" type="number" min="1" max="@Math.Min(20, Model.Product.StockQuantity)" value="1" />
+                <button type="submit" class="button button-dark">@T["AddToBag"]</button>
+            </form>
+        }
+        else{<p class="sold-out-note">@T["OutOfStock"]</p>}
+        <p class="demo-payment-note">@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Печём свежими партиями, поэтому состав и наличие могут немного меняться." : "Baked in small batches, so availability may change through the day.")</p>
+    </div>
+</section>

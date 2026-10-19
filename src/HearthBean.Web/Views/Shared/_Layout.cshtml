@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4efe4" />
+    <meta name="description" content="Hearth & Bean — naturally leavened bread, thoughtful pastries and good coffee in Brooklyn." />
+    <title>@ViewData["Title"] · @T["Brand"]</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <a class="wordmark" asp-controller="Home" asp-action="Index" aria-label="Hearth and Bean home">
+            <span class="wordmark-mark" aria-hidden="true">h<span>&</span>b</span>
+            <span class="wordmark-name">Hearth <i>&</i> Bean<small>BAKERY · BROOKLYN</small></span>
+        </a>
+        <nav class="main-nav" aria-label="Primary navigation">
+            <a asp-controller="Home" asp-action="Index">@T["NavHome"]</a>
+            <a asp-controller="Menu" asp-action="Index">@T["NavMenu"]</a>
+            <a asp-controller="Home" asp-action="About">@T["NavAbout"]</a>
+            <a asp-controller="Home" asp-action="Contact">@T["NavContact"]</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Admin" asp-action="Index">@T["NavAdmin"]</a>
+            }
+        </nav>
+        <div class="header-actions">
+            <form asp-controller="Culture" asp-action="Set" method="post" class="language-switch" aria-label="@T["Language"]">
+                <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                <button type="submit" name="culture" value="en" class="@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "en" ? "selected" : "")" aria-label="English">EN</button>
+                <button type="submit" name="culture" value="ru" class="@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "selected" : "")" aria-label="Русский">RU</button>
+            </form>
+            <a class="bag-link" asp-controller="Cart" asp-action="Index"><span aria-hidden="true">◯</span> @T["NavCart"]</a>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a class="account-link" asp-controller="Account" asp-action="Profile">@T["NavProfile"]</a>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="inline-form">
+                    <button class="text-button" type="submit">@T["SignOut"]</button>
+                </form>
+            }
+            else
+            {
+                <a class="account-link" asp-controller="Account" asp-action="Login">@T["SignIn"]</a>
+            }
+        </div>
+    </header>
+    @if (TempData["Notice"] is string notice)
+    {
+        <div class="flash flash-success" role="status">@notice</div>
+    }
+    @if (TempData["Error"] is string error)
+    {
+        <div class="flash flash-error" role="alert">@error</div>
+    }
+    <main id="main-content">
+            @RenderBody()
+    </main>
+    <footer class="site-footer">
+        <div class="footer-main">
+            <a class="wordmark wordmark-footer" asp-controller="Home" asp-action="Index">
+                <span class="wordmark-mark" aria-hidden="true">h<span>&</span>b</span>
+                <span class="wordmark-name">Hearth <i>&</i> Bean<small>BAKERY · BROOKLYN</small></span>
+            </a>
+            <p>@T["FooterLine"]</p>
+            <div class="footer-links"><a asp-controller="Home" asp-action="About">@T["NavAbout"]</a><a asp-controller="Home" asp-action="Contact">@T["NavContact"]</a><a asp-controller="Home" asp-action="About">@T["AboutProject"]</a></div>
+        </div>
+        <div class="footer-bottom"><span>© 2026 Hearth & Bean</span><span>@T["DemoNotice"]</span></div>
+    </footer>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

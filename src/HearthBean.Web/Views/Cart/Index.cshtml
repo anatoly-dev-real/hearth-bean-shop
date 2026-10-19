@@ -1,0 +1,18 @@
+@model CartViewModel
+@{ ViewData["Title"] = T["YourBag"]; }
+<section class="simple-page cart-page">
+    <p class="eyebrow">HEARTH & BEAN · YOUR ORDER</p><h1>@T["YourBag"] <span class="item-count">@Model.Lines.Sum(line => line.Quantity)</span></h1>
+    @if (Model.Lines.Count == 0)
+    {
+        <div class="empty-state"><span class="empty-mark">h&b</span><h2>@T["EmptyBag"]</h2><a class="button button-dark" asp-controller="Menu" asp-action="Index">@T["ContinueShopping"] <span aria-hidden="true">↗</span></a></div>
+    }
+    else
+    {
+        <div class="cart-layout"><div class="cart-lines">
+            @foreach (var line in Model.Lines)
+            {
+                <article class="cart-line"><a asp-controller="Menu" asp-action="Details" asp-route-slug="@line.Slug" class="cart-line-image"><img src="~/images/@Photos.FileFor(line.Slug, line.ImageFileName)" alt="@line.Name" /></a><div class="cart-line-main"><a asp-controller="Menu" asp-action="Details" asp-route-slug="@line.Slug" class="cart-line-name">@line.Name</a><span>@line.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))</span><div class="cart-line-actions"><form asp-action="Update" asp-route-productId="@line.ProductId" method="post" class="quantity-form"><label class="sr-only" for="qty-@line.ProductId">@T["Quantity"]</label><input id="qty-@line.ProductId" type="number" name="quantity" value="@line.Quantity" min="1" max="@Math.Min(20, line.StockQuantity)" /><button class="text-button" type="submit">@T["Save"]</button></form><form asp-action="Remove" asp-route-productId="@line.ProductId" method="post"><button type="submit" class="text-button remove-link">@T["Remove"]</button></form></div></div><strong class="cart-line-total">@line.LineTotal.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))</strong></article>
+            }
+        </div><aside class="cart-summary"><h2>@T["OrderDetails"]</h2><div class="summary-row"><span>@T["Subtotal"]</span><strong>@Model.Total.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))</strong></div><p class="demo-payment-note">@T["NoPayment"]</p><a class="button button-dark button-wide" asp-controller="Checkout" asp-action="Index">@T["Checkout"] <span aria-hidden="true">→</span></a><a class="text-link" asp-controller="Menu" asp-action="Index">@T["ContinueShopping"]</a></aside></div>
+    }
+</section>

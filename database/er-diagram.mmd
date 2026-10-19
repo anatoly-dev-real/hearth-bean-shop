@@ -1,0 +1,49 @@
+erDiagram
+    AspNetUsers ||--o{ CartItems : owns
+    Products ||--o{ CartItems : contains
+    Categories ||--o{ Products : groups
+    AspNetUsers ||--o{ Orders : places
+    Orders ||--|{ OrderItems : contains
+    Products ||--o{ OrderItems : snapshots
+    AspNetUsers {
+        string Id PK
+        string Email UK
+        string FullName
+        string Phone
+    }
+    Categories {
+        int Id PK
+        string Name
+        string Slug UK
+        int SortOrder
+    }
+    Products {
+        int Id PK
+        int CategoryId FK
+        string Name
+        string Slug UK
+        decimal Price
+        int StockQuantity
+        bool IsAvailable
+    }
+    CartItems {
+        int Id PK
+        string UserId FK
+        int ProductId FK
+        int Quantity
+        datetime AddedAt
+    }
+    Orders {
+        int Id PK
+        string UserId FK
+        datetime OrderDate
+        string Status
+        decimal TotalAmount
+    }
+    OrderItems {
+        int Id PK
+        int OrderId FK
+        int ProductId FK
+        int Quantity
+        decimal UnitPrice
+    }

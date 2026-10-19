@@ -1,0 +1,43 @@
+@model HomeViewModel
+@{
+    ViewData["Title"] = T["NavHome"];
+}
+
+<section class="hero">
+    <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot"></span>@T["HeroEyebrow"]</p>
+        <h1>@T["HeroTitle"]</h1>
+        <p class="hero-lede">@T["HeroCopy"]</p>
+        <a class="button button-dark" asp-controller="Menu" asp-action="Index">@T["ExploreMenu"] <span aria-hidden="true">↗</span></a>
+        <div class="hero-note"><span class="tiny-rule"></span><span>@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Хлеб на закваске · Выпечка ручной работы · Кофе" : "SOURDOUGH · HAND-LAMINATED PASTRY · COFFEE")</span></div>
+    </div>
+    <div class="hero-image-wrap">
+        <img class="hero-image" src="~/images/bread.jpg" alt="Freshly baked artisan sourdough loaf" />
+        <div class="image-stamp"><span>EST.</span><strong>2018</strong><span>BROOKLYN</span></div>
+        <div class="hero-image-caption"><span>01 / 05</span><span>@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "ХЛЕБ, КОТОРЫЙ ЖДЁТ" : "BREAD THAT WAITS")</span></div>
+    </div>
+</section>
+
+<section class="promise-strip" aria-label="Our approach">
+    <span>@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Долгая ферментация" : "LONG FERMENTATION")</span><i>✳</i>
+    <span>@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Местные продукты" : "LOCAL INGREDIENTS")</span><i>✳</i>
+    <span>@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Каждый день с 7 утра" : "OPEN DAILY FROM 7")</span>
+</section>
+
+<section class="section featured-section">
+    <div class="section-heading">
+        <div><p class="eyebrow">@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "СЕГОДНЯ НА ВИТРИНЕ" : "ON THE COUNTER TODAY")</p><h2>@T["FreshToday"]</h2></div>
+        <a class="text-link" asp-controller="Menu" asp-action="Index">@T["ViewAll"] <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="product-grid">
+        @foreach (var product in Model.FeaturedProducts)
+        {
+            <partial name="_ProductCard" model="product" />
+        }
+    </div>
+</section>
+
+<section class="story-band">
+    <div class="story-image"><img src="~/images/pastry.jpg" alt="Pastry prepared by hand in our bakery" loading="lazy" /></div>
+    <div class="story-copy"><p class="eyebrow">@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "МАЛЕНЬКАЯ ПЕКАРНЯ, БОЛЬШАЯ ЛЮБОВЬ" : "A SMALL BAKERY, A BIG SOFT SPOT")</p><h2>@T["AboutTitle"]</h2><p>@T["AboutCopy"]</p><a class="text-link" asp-controller="Home" asp-action="About">@T["NavAbout"] <span aria-hidden="true">↗</span></a></div>
+</section>

@@ -1,0 +1,14 @@
+**/bin/
+**/obj/
+**/.vs/
+.user-secrets/
+**/appsettings.Development.json
+**/secrets.json
+.vscode/
+.idea/
+*.user
+*.suo
+*.db
+*.mdf
+*.ldf
+TestResults/

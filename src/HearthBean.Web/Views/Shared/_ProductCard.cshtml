@@ -1,0 +1,20 @@
+@model ProductCardViewModel
+<article class="product-card">
+    <a class="product-image-link" asp-controller="Menu" asp-action="Details" asp-route-slug="@Model.Product.Slug" aria-label="@Model.Name">
+        <img src="~/images/@Photos.FileFor(Model.Product.Slug, Model.Product.ImageFileName)" alt="@Model.Name" loading="lazy" />
+        @if (Model.Product.IsVegan)
+        {
+            <span class="product-tag">@T["Vegan"]</span>
+        }
+    </a>
+    <div class="product-info">
+        <div class="product-meta"><span>@Model.CategoryName</span><span>@Model.Product.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))</span></div>
+        <h3><a asp-controller="Menu" asp-action="Details" asp-route-slug="@Model.Product.Slug">@Model.Name</a></h3>
+        <p>@Model.Description</p>
+        <form asp-controller="Cart" asp-action="Add" asp-route-productId="@Model.Product.Id" method="post" class="card-add-form">
+            <input type="hidden" name="quantity" value="1" />
+            <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+            <button class="button button-outline" type="submit" disabled="@(Model.Product.StockQuantity < 1)">@(Model.Product.StockQuantity < 1 ? T["OutOfStock"] : T["AddToBag"])</button>
+        </form>
+    </div>
+</article>

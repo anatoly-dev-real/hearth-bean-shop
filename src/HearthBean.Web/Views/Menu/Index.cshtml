@@ -1,0 +1,33 @@
+@model MenuViewModel
+@{
+    ViewData["Title"] = T["NavMenu"];
+}
+<section class="page-intro menu-intro">
+    <div><p class="eyebrow">@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "ИЗ ПЕЧИ И КОФЕМАШИНЫ" : "FROM THE OVEN & ESPRESSO BAR")</p><h1>@T["NavMenu"]</h1></div>
+    <p>@(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "Все товары готовим небольшими партиями. Если чего-то не осталось, приходите завтра." : "Everything is made in small batches. If we sell out, we will be back at it tomorrow.")</p>
+</section>
+<form class="catalog-filters" method="get" asp-controller="Menu" asp-action="Index">
+    <label class="search-field"><span class="sr-only">@T["Search"]</span><input name="search" value="@Model.Search" placeholder="@T["SearchPlaceholder"]" /><span aria-hidden="true">⌕</span></label>
+    <label><span class="sr-only">@T["Category"]</span><select name="categoryId"><option value="">@T["AllCategories"]</option>@foreach (var category in Model.Categories){<option value="@category.Id" selected="@(Model.CategoryId == category.Id)">@CatalogText.CategoryName(category)</option>}</select></label>
+    <label><span class="sr-only">@T["Sort"]</span><select name="sort"><option value="featured" selected="@(Model.Sort == "featured")">@T["SortFeatured"]</option><option value="price-low" selected="@(Model.Sort == "price-low")">@T["SortPriceLow"]</option><option value="price-high" selected="@(Model.Sort == "price-high")">@T["SortPriceHigh"]</option><option value="newest" selected="@(Model.Sort == "newest")">@T["SortNewest"]</option></select></label>
+    <button class="button button-dark" type="submit">@T["ApplyFilters"]</button>
+</form>
+<section class="section catalog-section">
+    <p class="result-count">@Model.TotalCount @(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ru" ? "товаров" : "items")</p>
+    @if (Model.Products.Count == 0)
+    {
+        <div class="empty-state"><span class="empty-mark">h&b</span><h2>@T["NoProducts"]</h2><a class="text-link" asp-action="Index">@T["AllCategories"]</a></div>
+    }
+    else
+    {
+        <div class="product-grid">@foreach (var product in Model.Products){<partial name="_ProductCard" model="product" />}</div>
+        @if (Model.PageCount > 1)
+        {
+            <nav class="pagination" aria-label="Pagination">
+                @if (Model.Page > 1){<a asp-route-page="@(Model.Page - 1)" asp-route-search="@Model.Search" asp-route-categoryId="@Model.CategoryId" asp-route-sort="@Model.Sort">← @T["Previous"]</a>}
+                <span>@Model.Page / @Model.PageCount</span>
+                @if (Model.Page < Model.PageCount){<a asp-route-page="@(Model.Page + 1)" asp-route-search="@Model.Search" asp-route-categoryId="@Model.CategoryId" asp-route-sort="@Model.Sort">@T["Next"] →</a>}
+            </nav>
+        }
+    }
+</section>
