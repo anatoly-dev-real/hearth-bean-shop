@@ -83,4 +83,4 @@ Screenshots show the desktop layout with demo data.
 
 ## About this project
 
-This is an educational portfolio project for a fictional bakery. It was developed with AI assistance, and the product illustrations were generated with it. All names, addresses, accounts and order history are synthetic.
+This is an educational portfolio project for a fictional bakery. The product illustrations were generated with AI assistance. All names, addresses, accounts and order history are synthetic.
