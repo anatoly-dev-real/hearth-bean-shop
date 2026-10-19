@@ -60,9 +60,9 @@ dotnet test HearthBean.slnx
 
 Order ownership and admin authorization are enforced in the controllers and queries and are not covered by automated tests yet.
 
-## Screenshots and video
+## Screenshots
 
-Screenshots show the desktop layout with demo data. A shot-by-shot script for the demo video is in [`docs/demo-video-script.md`](docs/demo-video-script.md); the finished video link belongs in [`docs/demo-video-link.md`](docs/demo-video-link.md).
+Screenshots show the desktop layout with demo data.
 
 | | |
 | --- | --- |
@@ -83,4 +83,4 @@ Screenshots show the desktop layout with demo data. A shot-by-shot script for th
 
 ## About this project
 
-This is an educational portfolio project for a fictional bakery. AI assistance was used while building and reviewing parts of the code. All names, addresses, accounts and order history are synthetic.
+This is an educational portfolio project for a fictional bakery. It was developed with AI assistance, and the product illustrations were generated with it. All names, addresses, accounts and order history are synthetic.

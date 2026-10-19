@@ -12,7 +12,7 @@ The images are used under the Unsplash License. Verify the current license terms
 
 ## Product pictures
 
-The 30 product pictures in `wwwroot/images/products` are original flat-style illustrations drawn programmatically for this project with AI assistance; they use no third-party photos or artwork. See [`PRODUCT_PHOTOS.md`](PRODUCT_PHOTOS.md) for replacing them with real photos. If you replace one, list the photo here with author and source URL:
+The 30 product pictures in `wwwroot/images/products` are original flat-style illustrations generated with AI assistance for this project; they use no third-party photos or artwork. See [`PRODUCT_PHOTOS.md`](PRODUCT_PHOTOS.md) for replacing them with real photos. If you replace one, list the photo here with author and source URL:
 
 | File | Author | Source URL |
 | --- | --- | --- |
